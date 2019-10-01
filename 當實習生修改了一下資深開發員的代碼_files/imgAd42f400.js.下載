@@ -1,0 +1,769 @@
+define("cdg_module/dist/sdk.js",[],function(){
+"use strict";
+return'!function(e){var t={};function o(n){if(t[n])return t[n].exports;var r=t[n]={i:n,l:!1,exports:{}};return e[n].call(r.exports,r,r.exports,o),r.l=!0,r.exports}o.m=e,o.c=t,o.d=function(e,t,n){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)o.d(n,r,function(t){return e[t]}.bind(null,r));return n},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=0)}([function(e,t,o){"use strict";var n=o(1),r=o(2),a=o(3),i=document.createElement("script");i.onerror=function(e){(0,n.debug)("load entry script error."+JSON.stringify(e)),(0,r.notify)({action:a.ACTION_ON_ERROR,value:"js sdk load fail."})},i.onload=function(){},i.src="//wximg.qq.com/wxp/assets/wxsdk/dist/entry.v1555063197179.js",document.body.appendChild(i),window.messageQueue=[],window.isSDKReady=!1,(0,r.listener)(function(e){isSDKReady||window.messageQueue.push(e)})},function(e,t,o){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n="__WXAD__LOG__DEBUG",r="__WXAD__LOG__DETAIL";t.debug=function(e){if(1==localStorage.getItem(n))try{var t=localStorage.getItem(r);t?((t=JSON.parse(t)).logs=t.logs||[],t.logs.length>50&&t.logs.shift()):(t={}).logs=[];var o="["+(new Date).toString()+"]  ";t.logs.push(o+e),localStorage.setItem(r,JSON.stringify(t))}catch(e){console.log(e)}console.debug(e)},t.clear=function(){localStorage.setItem(r,"")}},function(e,t,o){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.notify=function(e){console.log("ad iframe notify action:",e),window.postMessage(e,"*")},t.listener=function(e){n.push(e)};var n=[];window.addEventListener("message",function(e){e.source!==window&&(console.log("ad iframe recive action:",e.data),n.map(function(t){t.call(null,e.data)}))})},function(e,t,o){"use strict";Object.defineProperty(t,"__esModule",{value:!0});t.ACTION_SDK_READY="onSDKReady",t.ACTION_AD_READY="onAdReady",t.ACTION_ON_SHOW="onShow",t.ACTION_ON_CLOSE="onClose",t.ACTION_ON_ERROR="onError",t.ACTION_ON_LAND="onLand",t.ACTION_ON_REPORT="onReport",t.ACTION_ON_PROXY="onProxy",t.ACTION_ON_RESUME="onResume",t.ACTION_SET_ADDATA="setAdData",t.ACTION_SET_PAGEDATA="setPageData",t.ACTION_SET_VIDEOSTATE="setVideoState",t.ACTION_SHOW_AD="showAd",t.ACTION_HIDE_AD="hideAd",t.ACTION_PLAY_AD="playAd",t.ACTION_PAUSE_AD="pauseAd",t.ACTION_LAND_CALLBACK="landCallback",t.ACTION_PROXY_CALLBACK="proxyCallback",t.DEST_TYPE={GDT_SPREAD:0,OUT_LINK:1,BASIC_DETAILS:2,WECHAT_FOLLOW_TIPS:3,BIG_PIC_DETAILS:4,WECHAT_SHOP:5,WECHAT_APPLET:6,LEAF:7,CANVAS:9},t.AD_SOURCE={ORIGINAL_VIDEO:1004}}]);';
+});define("new_video/plugin/frameAd.html.js",[],function(){
+return'<!--前贴片广告：cdg广告侧提供的iframe-->\n<div id="js_mpvedio_frame_<#=id#>" style="background-color: #fff;position: absolute;top:0;left:0;z-index:999;width:<#=width#>px;height:<#=height#>px; display: none;">	  \n	<iframe id="js_mpvedio_main_frame_<#=id#>" style="border: 0;width:<#=width#>px;height:<#=height#>px;"></iframe>\n</div>\n';
+});define("new_video/plugin/imgAd.html.js",[],function(){
+return'<!--前贴片广告：图片展示区域-->\n<div id="js_mpvedio_imgad_<#=id#>" style="display:none;width:<#=width#>px;height:<#=height#>px;">   \n  <div class="video_ad js_ad_controll" style="display:none;">  \n    <span class="button_left_time video_ad_time_meta mpad_more_innervideo_container">广告      <!--投诉入口 begin-->\n            <div href="javascript:;" class="mpad_more js_ad_opt_list_btn" style="<# if(!parseInt(parent.window.can_see_complaint)){ #>display: none<# } #>">\n        <ul class="mpad_more_list js_ad_opt_list" style="display:none;">\n          <li class="mpad_more_list_ele">\n            <a class="mpad_more_list_ele_container js_complain_btn" href="javascript:;">投诉</a>\n          </li>\n        </ul>\n      </div>\n      <!--投诉入口 end-->\n      <span class="button_left_time_num js_play_time"></span></span>\n      <a href="javascript:void(0);" class="btn_close js_btn_can_close_ad video_ad_time_meta" style="display:none;">可在<span class="js_can_close_time">(5s)</span>后关闭</a>\n      <a href="javascript:void(0);" class="btn_close js_btn_close_ad video_ad_time_meta" style="display:none;">关闭<i></i></a>\n  </div>\n  <!-- 广告详情入口 -->\n  <div class="video_ad_detail js_ad_detail" style="display:none;">\n      <a href="javascript:;" class="btn btn_ad_detail with_arrow js_btn_ad_detail">了解详情</a>\n  </div>\n  <div class="video_ad_detail js_ad_app" style="display:none;">\n      <a href="javascript:;" class="btn btn_ad_detail with_arrow js_btn_ad_app">下载应用</a>\n  </div>\n\n    <!-- 跟播放器相同比例是style加上：\n    -webkit-background-size:cover;background-size:cover;  -->\n    <div style="background-image:url(<#=imgUrl#>);"  class="js_img imgad_cover">\n        <!--\n      <img src="<#=imgUrl#>">\n        -->\n  </div>\n</div>\n';
+});define("biz_wap/utils/log.js",["biz_wap/utils/mmversion.js","biz_wap/jsapi/core.js"],function(i){
+"use strict";
+var s=i("biz_wap/utils/mmversion.js"),e=i("biz_wap/jsapi/core.js");
+return function(i,n,o){
+"string"!=typeof i&&(i=JSON.stringify(i)),n=n||"info",o=o||function(){};
+var t;
+s.isIOS?t="writeLog":s.isAndroid&&(t="log"),t&&e.invoke(t,{
+level:n,
+msg:"[WechatFe]"+i
+},o);
+};
+});define("biz_common/utils/wxgspeedsdk.js",[],function(){
+"use strict";
+function e(e){
+if(!e.pid||!e.speeds)return-1;
+if(!e.speeds.length>0){
+var n=e.speeds;
+e.speeds=[],e.speeds.push(n);
+}
+e.user_define&&(p=e.user_define);
+for(var t=d(e),o=0;o<e.speeds.length;o++){
+var r=e.speeds[o];
+r.time=parseInt(r.time),r.sid>20&&r.time>=0&&i(t,r.sid,r.time);
+}
+}
+function n(){
+s(function(){
+setTimeout(function(){
+for(var e in u)r({
+pid_uin_rid:e,
+speeds:u[e],
+user_define:p
+},c);
+u={};
+},100);
+});
+}
+function t(e){
+s(function(){
+if(!e.pid||!e.time)return-1;
+var n=d(e);
+i(n,9,e.time);
+});
+}
+function o(e){
+s(function(){
+var n=d(e);
+u[n]||(u[n]=[]);
+var t=window.performance||window.msPerformance||window.webkitPerformance||{};
+if(t&&t.timing){
+var o=t.timing||{};
+i(n,1,o.domainLookupEnd-o.domainLookupStart),i(n,2,"https:"==location.protocol&&0!=o.secureConnectionStart?o.connectEnd-o.secureConnectionStart:0),
+i(n,3,o.connectEnd-o.connectStart),i(n,4,o.responseStart-o.requestStart),i(n,5,o.responseEnd-o.responseStart),
+i(n,6,o.domContentLoadedEventStart-o.domLoading),i(n,7,0==o.domComplete?0:o.domComplete-o.domLoading),
+i(n,8,0==o.loadEventEnd?0:o.loadEventEnd-o.loadEventStart),function(){
+setTimeout(function(){
+o.loadEventEnd&&(i(n,7,0==o.domComplete?0:o.domComplete-o.domLoading),i(n,8,0==o.loadEventEnd?0:o.loadEventEnd-o.loadEventStart));
+},0);
+}(u),u[n][9]||i(n,9,o.domContentLoadedEventStart-o.navigationStart),i(n,10,o.redirectEnd-o.redirectStart),
+i(n,11,o.domainLookupStart-o.fetchStart),i(n,12,o.domLoading-o.responseStart);
+}
+});
+}
+function i(e,n,t){
+u[e]=u[e]||[],u[e][n]=u[e][n]||[],0>t||(21>n?u[e][n][0]=t:u[e][n].push(t));
+}
+function d(e){
+return e&&e.pid?e.pid+"_"+(e.uin||0)+"_"+(e.rid||0):void(console&&console.error("Must provide a pid"));
+}
+function r(e,n){
+var t=e.pid_uin_rid.split("_");
+if(3!=t.length)return void(console&&console.error("pid,uin,rid, invalid args"));
+var o="pid="+t[0]+"&uin="+t[1]+"&rid="+t[2];
+e.user_define&&(o+="&user_define="+e.user_define);
+for(var i=n+o+"&speeds=",d="",r=[],s=1;s<e.speeds.length;s++)if(e.speeds[s]){
+for(var a=0;a<e.speeds[s].length;a++){
+var p=s+"_"+e.speeds[s][a];
+i.length+d.length+p.length<1024?d=d+p+";":(d.length&&r.push(i+d.substring(0,d.length-1)),
+d=p+";");
+}
+s==e.speeds.length-1&&r.push(i+d.substring(0,d.length-1));
+}
+for(var s=0;s<r.length;s++)(new Image).src=r[s];
+}
+function s(e){
+"complete"==document.readyState?e():f.push(e);
+}
+function a(){
+for(var e=0;e<f.length;e++)f[e]();
+f=[];
+}
+var p,u={},c="https://badjs.weixinbridge.com/frontend/reportspeed?",f=[];
+return window.addEventListener?window.addEventListener("load",a,!1):window.attachEvent&&window.attachEvent("onload",a),
+{
+saveSpeeds:e,
+send:n,
+setFirstViewTime:t,
+setBasicTime:o
+};
+});define("biz_wap/jsapi/app.js",["biz_wap/jsapi/core.js"],function(n){
+"use strict";
+var a=n("biz_wap/jsapi/core.js"),o={
+getInstallState:function(n,o){
+a.invoke("getInstallState",n,o);
+},
+launch3rdApp:function(n,o){
+a.invoke("launch3rdApp",n,o);
+},
+addDownloadTask:function(n,o){
+a.invoke("addDownloadTask",n,o);
+},
+cancelDownloadTask:function(n,o){
+a.invoke("cancelDownloadTask",n,o);
+},
+queryDownloadTask:function(n,o){
+a.invoke("queryDownloadTask",n,o);
+},
+installDownloadTask:function(n,o){
+a.invoke("installDownloadTask",n,o);
+},
+downloadStateChange:function(n){
+a.on("wxdownload:state_change",n);
+}
+};
+return o;
+});define("biz_wap/utils/ajax_load_js.js",["biz_wap/utils/ajax.js","biz_wap/utils/localstorage.js"],function(e){
+"use strict";
+function n(e){
+var n=d(e.url,e.version),o=function(){},i=function(){};
+if("function"==typeof e.onSuccess&&(o=e.onSuccess),"function"==typeof e.onError&&(i=e.onError),
+c(e.win,n))return void o({
+code:1,
+queueIndex:0
+});
+if(e.useCache){
+var a=u(e.url,e.version);
+if(a&&t({
+win:e.win,
+funcStr:a,
+useCache:!1,
+url:e.url,
+version:e.version
+}),c(e.win,n))return void o({
+code:2,
+queueIndex:0
+});
+}
+if(S.callbackQueue.push({
+options:e,
+onSuccess:o,
+onError:i
+}),"undefined"==typeof S.jsLoadState[n]&&(S.jsLoadState[n]=-1),-1==S.jsLoadState[n]){
+var s=e.url;
+s+=-1==s.indexOf("?")?"?"+S.customerParam+"="+e.version:"&"+S.customerParam+"="+e.version,
+r({
+originUrl:e.url,
+version:e.version,
+url:s,
+key:n
+});
+}
+}
+function r(e){
+S.jsLoadState[e.key]=1,w({
+url:e.url,
+notJoinUrl:!0,
+timeout:1e4,
+type:"POST",
+dataType:"text",
+noXRequestedWidthHeader:!0,
+success:function(n){
+if(1==S.jsLoadState[e.key]){
+S.jsLoadState[e.key]=-1;
+var r=!0;
+r=n?t({
+win:null,
+funcStr:n,
+useCache:!0,
+url:e.originUrl,
+version:e.version
+}):!1,o(r?{
+code:3,
+type:"suc",
+funcStr:n
+}:{
+code:51,
+type:"err"
+});
+}
+},
+error:function(){
+1==S.jsLoadState[e.key]&&(S.jsLoadState[e.key]=-1,o({
+code:52,
+type:"err"
+}));
+},
+complete:function(){
+1==S.jsLoadState[e.key]&&(S.jsLoadState[e.key]=-1,o({
+code:53,
+type:"err"
+}));
+}
+});
+}
+function t(e){
+var n=e.win||window,r=!0;
+try{
+n.eval(e.funcStr),r=!0;
+}catch(t){
+r=!1;
+}
+return r?(s({
+url:e.url,
+version:e.version,
+win:n
+}),e.useCache&&a(e.url,e.version,e.funcStr),!0):(l({
+url:e.url,
+version:e.version,
+win:n
+}),i(e.url),!1);
+}
+function o(e){
+for(var n=0,r=S.callbackQueue.length;r>n;n++){
+var o=S.callbackQueue[n],u=o.options,i=u.win,a=d(u.url,u.version);
+"suc"==e.type?(e.funcStr&&!c(i,a)&&t({
+win:i,
+funcStr:e.funcStr,
+useCache:!1,
+url:u.url,
+version:u.version
+}),o.onSuccess({
+code:e.code,
+queueIndex:n
+})):o.onError({
+code:e.code,
+queueIndex:n
+});
+}
+S.callbackQueue=[];
+}
+function u(e,n){
+var r=f(e),t=y.get(r);
+if(!t)return null;
+var o;
+try{
+o=JSON.parse(t);
+}catch(u){}
+if(o){
+var a=+new Date,c=1*o.time;
+return a-c>S.lsTimeout||o.version!=n||!o.func?(i(e),null):o.func;
+}
+}
+function i(e){
+var n=f(e);
+y.remove(n);
+}
+function a(e,n,r){
+var t={
+version:n,
+func:r,
+time:+new Date
+},o=f(e);
+try{
+y.set(o,JSON.stringify(t));
+}catch(u){}
+}
+function c(e,n){
+return e=e||window,e[S.winCacheKey]&&e[S.winCacheKey][n]&&e[S.winCacheKey][n].state===!0?!0:!1;
+}
+function s(e){
+var n=d(e.url,e.version),r=e.win||window;
+r[S.winCacheKey]||(r[S.winCacheKey]={}),r[S.winCacheKey][n]||(r[S.winCacheKey][n]={}),
+r[S.winCacheKey][n].state=!0;
+}
+function l(e){
+var n=d(e.url,e.version),r=e.win||window;
+if(r[S.winCacheKey]&&r[S.winCacheKey][n])try{
+delete r[S.winCacheKey][n];
+}catch(t){}
+}
+function f(e){
+return encodeURIComponent(e);
+}
+function d(e,n){
+return encodeURIComponent(e)+"_"+n||"";
+}
+function v(e){
+l(e),i(e.url);
+}
+var w=e("biz_wap/utils/ajax.js"),y=e("biz_wap/utils/localstorage.js"),S={
+jsLoadState:{},
+winCacheKey:"__loadExternalJsStates__",
+lsTimeout:1728e5,
+customerParam:"wxv",
+callbackQueue:[]
+};
+return{
+ClearCache:v,
+Load:n
+};
+});define("new_video/plugin/util.js",["biz_wap/utils/storage.js"],function(e){
+"use strict";
+var t=e("biz_wap/utils/storage.js"),n=new t("player"),r=function(e,t,n){
+var r=!1;
+return e&&t&&n&&(t-e)/1e3/3600>n&&(r=!0),r;
+},i=function(e){
+var t=[0,10,100,1e3,1e4,1e5],r=(""+parseInt(e,10)).length;
+n.set("clickPlay",{
+time:(new Date).getTime(),
+flow:5>=r?t[r]:1e5
+},+new Date+864e5);
+},a=function(){
+var e=!1,t=n.get("clickPlay");
+if(t){
+var i=t.time;
+r(i,(new Date).getTime(),24)||(e=!0);
+}
+return e;
+},u=function(e){
+var t=["2g","3g","4g","2g/3g"];
+return e?t.indexOf(e)>-1:!1;
+},l=function(e){
+if(!e||""===e||0===e||10>=e)return!1;
+var t=n.get("clickPlay");
+if(t){
+var r=t.flow;
+if(r>=e||1e5===r)return!1;
+}
+return!0;
+},o=function(e,t){
+var n=Object.getOwnPropertyNames(e),r=Object.getOwnPropertyNames(t);
+if(n.length!==r.length)return!1;
+for(var i=0;i<n.length;i++){
+var a=n[i],u=e[a],l=t[a];
+if(u!==l)return!1;
+}
+return!0;
+},c=function(e){
+return"no"===e||"none"===e;
+};
+return{
+setUserClickPlay:i,
+isUserClickPlay:a,
+isNetworkUnWifi:u,
+isVideoNeedFlowNotice:l,
+isObjectValueEqual:o,
+isNoneNetwork:c
+};
+});define("biz_common/base64.js",[],function(r,t,n){
+"use strict";
+var e,c="2.1.9";
+if("undefined"!=typeof n&&n.exports)try{}catch(o){}
+var u="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",a=function(r){
+for(var t={},n=0,e=r.length;e>n;n++)t[r.charAt(n)]=n;
+return t;
+}(u),h=String.fromCharCode,i=function(r){
+if(r.length<2){
+var t=r.charCodeAt(0);
+return 128>t?r:2048>t?h(192|t>>>6)+h(128|63&t):h(224|t>>>12&15)+h(128|t>>>6&63)+h(128|63&t);
+}
+var t=65536+1024*(r.charCodeAt(0)-55296)+(r.charCodeAt(1)-56320);
+return h(240|t>>>18&7)+h(128|t>>>12&63)+h(128|t>>>6&63)+h(128|63&t);
+},f=/[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g,A=function(r){
+return r.replace(f,i);
+},d=function(r){
+var t=[0,2,1][r.length%3],n=r.charCodeAt(0)<<16|(r.length>1?r.charCodeAt(1):0)<<8|(r.length>2?r.charCodeAt(2):0),e=[u.charAt(n>>>18),u.charAt(n>>>12&63),t>=2?"=":u.charAt(n>>>6&63),t>=1?"=":u.charAt(63&n)];
+return e.join("");
+},g=function(r){
+return r.replace(/[\s\S]{1,3}/g,d);
+},s=e?function(r){
+return(r.constructor===e.constructor?r:new e(r)).toString("base64");
+}:function(r){
+return g(A(r));
+},C=function(r,t){
+return t?s(String(r)).replace(/[+\/]/g,function(r){
+return"+"==r?"-":"_";
+}).replace(/=/g,""):s(String(r));
+},l=function(r){
+return C(r,!0);
+},p=new RegExp(["[À-ß][-¿]","[à-ï][-¿]{2}","[ð-÷][-¿]{3}"].join("|"),"g"),S=function(r){
+switch(r.length){
+case 4:
+var t=(7&r.charCodeAt(0))<<18|(63&r.charCodeAt(1))<<12|(63&r.charCodeAt(2))<<6|63&r.charCodeAt(3),n=t-65536;
+return h((n>>>10)+55296)+h((1023&n)+56320);
+
+case 3:
+return h((15&r.charCodeAt(0))<<12|(63&r.charCodeAt(1))<<6|63&r.charCodeAt(2));
+
+default:
+return h((31&r.charCodeAt(0))<<6|63&r.charCodeAt(1));
+}
+},b=function(r){
+return r.replace(p,S);
+},v=function(r){
+var t=r.length,n=t%4,e=(t>0?a[r.charAt(0)]<<18:0)|(t>1?a[r.charAt(1)]<<12:0)|(t>2?a[r.charAt(2)]<<6:0)|(t>3?a[r.charAt(3)]:0),c=[h(e>>>16),h(e>>>8&255),h(255&e)];
+return c.length-=[0,0,2,1][n],c.join("");
+},F=function(r){
+return r.replace(/[\s\S]{1,4}/g,v);
+},j=e?function(r){
+return(r.constructor===e.constructor?r:new e(r,"base64")).toString();
+}:function(r){
+return b(F(r));
+},m=function(r){
+return j(String(r).replace(/[-_]/g,function(r){
+return"-"==r?"+":"/";
+}).replace(/[^A-Za-z0-9\+\/]/g,""));
+};
+return{
+VERSION:c,
+atob:F,
+btoa:g,
+fromBase64:m,
+toBase64:C,
+utob:A,
+encode:C,
+encodeURI:l,
+btou:b,
+decode:m
+};
+});define("new_video/player.html.js",[],function(){
+return'<div id="js_mpvedio_<#=id#>" class="js_mpvedio">\n<div class="js_page_video page_video ratio_primary <#if(ratio==(4/3)){#>video_skin_primary<#}#>" style="width:<#=width#>px;height:<#=height#>px;display:<#=display#>;">\n    <!--ps: @拉风\n        1.全屏body添加扩展类： full_screen_mv\n        2.全屏是竖屏播放的情况：需要给page_video这个div加一个margin-left,margin-top\n        这两个值是page_video设置的高度和宽度的一半的负数；\n        3.如果是横屏的话(横屏默认为全屏)，page_video上设置的宽度和高度去掉即可。\n    -->\n\n<!--     <div class="wrp_loading js_loading">\n        <div class="wrp_svg">\n            <svg  class="rotate_svg" width="64" height="64" xmlns="http://www.w3.org/2000/svg">\n                <circle cx="50%" cy="50%" r="40%" stroke-width="4"/>\n                <path fill="#fff" stroke="#f00" stroke-width="4" fill-opacity="0" d="M4.5 35\n               A 26 26, 0,0,0, 27 56" transform="rotate(330.191 30 30)">\n             <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 30 30" to="360 30 30" dur="5s" repeatCount="indefinite"></animateTransform>\n\n          </path>\n            </svg>\n            <svg class="loader_bg" xmlns="http://www.w3.org/2000/svg" width="64" height="64">\n                <circle cx="50%" cy="50%" r="40%" style="fill:#a5a4a2;stroke:#a5a4a2;stroke-width:4;fill-opacity:0;"></circle>\n            </svg>\n        </div>\n    </div>     -->\n    <!--下载腾讯视频-->\n    <div id="ing_download_<#=id#>" class="app_download_container" style="display:none;">\n        <# if (window.cgiData) { #>\n        <img class="app_thumb" src="<#=window.cgiData.appImg||""#>">\n        <# } else { #>\n        <img class="app_thumb" src="">\n        <# } #>\n        <span class="btn_app_download_wrp js_download_btn">\n            <span class="btn_app_download js_download_text">下载</span>\n        </span>\n        <span class="btn_app_download_wrp js_progress_main" style="display:none;">\n            <span class="btn_app_download progress_text js_progress_text"></span>\n            <span class="app_download_progress js_progress" style="width:0%;"></span>\n        </span>\n        <div class="app_download_info">\n            <strong class="app_download_title">提升3倍流畅度</strong>\n            <p class="app_download_desc"><span class="js_installStatus"></span>腾讯视频客户端</p>\n        </div>\n    </div>\n\n    <!-- 视频加载失败 -->\n    <!--\n    <div class="wx_video_error_box">\n        <div class="wx_video_error_msg">\n            <p>视频加载失败，请刷新重试</p>\n            <a class="wx_video_error_msg_btn" href="javascript:;">刷新</a>\n        </div>\n        <img class="wx_video_error_loading" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAA5CAMAAAC7xnO3AAAAY1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+aRQ2gAAAAIXRSTlMAOx20pMJbzBQNTDGTh2ohLCZmeUF2hEmXCFdxUquef4yHE17nAAACnklEQVRIx9WW2xqiIBSFRc1AUATJU1a+/1MOm0NYKvnNXM260ZLftRcbqCQinOLI0yiY/iXKuUZPjx5Fk+6RhF1yHiVF0wC6IZfr9fqIkpRqdNyQ9AoiUU8g+YZ8Xn96YmNKvkhkLMskKgEo/yJzaxkXeZsGsjeWKEIFU/FBZgA+D5yEwGtTgR0J18lYUvdcLZ1YkUjLf+a0saYYSG/J3Hury+WSkTCjCETtF6Mvd8QGJMZSWIfsAlKhWGRl5zQ1ZNBDgy/zzvvFavWUK7SyTRs+rsiUZS/4LHIHyo8VgBx7vDkKx2WhPS7dD1Q6cNlu2dTa0gMys4bz/vJR6ph8ADgcVcSVUkfnhzJTc6gRj8fbCOHk30UI2KC+V4gKjskJQqC5frFHli0kafogFIfFkAXVCSqdAFVR8pmtVCWiXCtaarbWpGtQAYx7sjf2GCbfjFRQpH7lTLucveSMBE7+Z6VqViT2/PVs0d7hPk9TUcTaUuVaT8k/f/v6SXOgyG7InZaSvM8vj/309LrbvpSAORDH2/kWGyHhm/u5AYUc8qdFBRRrsV749bRv6I5x1OY50GZUUxQz9aGplAXZcOQ1DL3vwsTyvHQ2YWgjZV2rDTmxYRjUuoBvcQDr7QRLBiiNzJ4BawG3FLtTmEMGBigTRyC2oIKht1vbwLWrKmXKBZal+yApDGhm4q5JCVdNdrZeQBe8B44WnE2NGmxrR1bCvMugHdkhSwMWI9wjIGeosnPlJmNrst6PQrpeFkBSyAmkdD016DYqAVC6HHcNtnCPgazcuytAd5IqB/qYtq4bkP7vnEaL3W4KH9/HhKBAKl8XFUlMIWYIek4hZgh6UtjHBLVA4pPkCKRf9jOQ5Kwp1UvPDyb3qkPJaRG8Ln7f8Q8Bki/Kj5IYnQAAAABJRU5ErkJggg==">\n    </div>\n    -->\n    <!--菊花-->\n    <div class="wrp_loading js_loading start_loading"  style="display:none;">\n        <div class="mid_opr">\n            <div class="spinner" role="progressbar"\n                style="position: absolute; width: 0px; z-index: 2000000000; left: 50%; top: 50%;backface-visibility:hidden; -webkit-backface-visibility:hidden;">\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-0-12 1.25s linear infinite;-webkit-animation: opacity-60-25-0-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(0deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(0deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-1-12 1.25s linear infinite;-webkit-animation: opacity-60-25-1-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(30deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(30deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-2-12 1.25s linear infinite;-webkit-animation: opacity-60-25-2-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(60deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(60deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-3-12 1.25s linear infinite;-webkit-animation: opacity-60-25-3-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(90deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(90deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-4-12 1.25s linear infinite;-webkit-animation: opacity-60-25-4-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(120deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(120deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-5-12 1.25s linear infinite;-webkit-animation: opacity-60-25-5-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(150deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(150deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-6-12 1.25s linear infinite;-webkit-animation: opacity-60-25-6-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(180deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(180deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-7-12 1.25s linear infinite;-webkit-animation: opacity-60-25-7-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(210deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(210deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-8-12 1.25s linear infinite;-webkit-animation: opacity-60-25-8-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(240deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(240deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-9-12 1.25s linear infinite;-webkit-animation: opacity-60-25-9-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(270deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(270deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-10-12 1.25s linear infinite;-webkit-animation: opacity-60-25-10-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(300deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(300deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n                <div style="position: absolute; top: -1px; opacity: 0.25; animation: opacity-60-25-11-12 1.25s linear infinite;-webkit-animation: opacity-60-25-11-12 1.25s linear infinite;">\n                    <div\n                        style="position: absolute; width: 9.68px; height: 3.08px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; transform-origin: left 50% 0px; transform: rotate(330deg) translate(9.24px, 0px);-webkit-transform-origin: left 50% 0px; -webkit-transform: rotate(330deg) translate(9.24px, 0px); border-radius: 1px; background: rgb(253, 253, 253);"></div>\n                </div>\n            </div>\n        </div>\n        <!--\n        <svg version="1.1" class="svg_loader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n        width="60px" height="60px" viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">\n\n        <circle cx="30" cy="30" r="26" style="fill:#a5a4a2;stroke:#a5a4a2;stroke-width:4;fill-opacity:0" />\n        <path  fill="#fff" stroke="#fff"  stroke-width="4"  fill-opacity="0" d="M4.5 35A 26 26, 0,0,0, 27 56" style="stroke-linecap:round;">\n        <animateTransform attributeType="xml"\n        attributeName="transform"\n        type="rotate"\n        from="0 30 30"\n        to="360 30 30"\n        dur="0.5s"\n        repeatCount="indefinite"/>\n        </path>\n        </svg>\n        -->\n    </div>\n\n    <!-- 播放按钮 z-index:12 -->\n    <div class="video_pause_controll js_video_pause_controll">\n        <a class="btn_pause js_btn_pause">\n            <i class="icon_pause"></i>\n        </a>\n    </div>\n\n    <!-- 互选视频广告 静音btn 静音状态className:muting -->\n    <# if(ad_muted_btn){ #>\n    <span class="js_muted_btn video_muted_btn muting">静音</span>\n    <# } #>\n\n    <!-- 视频广告 z-index:13 -->\n    <div class="video_ad js_ad_controll" style="display:none;">\n        <span class="button_left_time video_ad_time_meta mpad_more_innervideo_container js_ad_opt_list_btn">广告            <!--投诉入口 begin-->\n            <div href="javascript:;" class="mpad_more js_ad_opt_list_btn" style="<# if(!parseInt(parent.window.can_see_complaint)){ #>display: none<# } #>">\n                <ul class="mpad_more_list js_ad_opt_list" style="display:none;">\n                    <li class="mpad_more_list_ele">\n                        <a class="mpad_more_list_ele_container js_complain_btn" href="javascript:;">投诉</a>\n                    </li>\n                </ul>\n            </div>\n            <!--投诉入口 end-->\n            <span class="button_left_time_num js_play_time"></span></span>\n        <a href="javascript:;" class="btn_close js_btn_can_close_ad video_ad_time_meta" style="display:none;">可在<span class="js_can_close_time">(5s)</span>后关闭</a>\n        <a href="javascript:;" class="btn_close js_btn_close_ad video_ad_time_meta" style="display:none;">关闭<i></i></a>\n\n    </div>\n    <!-- 视频广告详情入口 -->\n    <div class="video_ad_detail js_ad_detail" style="display:none;">\n        <!--带小程序logo时，className 去掉with_arrow，加className with_weapp-->\n        <a href="javascript:;" class="btn btn_ad_detail with_arrow js_btn_ad_detail">\n            <!-- 小程序图标 -->\n            <span class="icon26_weapp_white js_video_post_weapp_icon" style="display:none;"></span>了解详情        </a>\n    </div>\n    <!--带小程序icon-->\n    <!-- <div class="video_ad_detail js_ad_detail" style="display:none;">\n        <a href="javascript:;" class="btn btn_ad_detail with_weapp js_btn_ad_detail">\n            <span class="icon26_weapp_white js_video_post_weapp_icon"></span>\n            了解详情\n        </a>\n    </div> -->\n\n    <div class="video_ad_detail js_ad_app" style="display:none;">\n        <a href="javascript:;" class="btn btn_ad_detail with_arrow js_btn_ad_app">下载应用</a>\n    </div>\n\n     <!--最后的视频推荐 z-index:11-->\n    <div class="js_end_dom continue_play none">\n        <!--\n        <div class="continue_inner">\n            <div class="hd_opr"><a href="#" class="btn_replay"><i class="icon_replay"></i>重新播放</a></div>\n            <div class="tit_desc">以下视频将跳到腾讯视频播放</div>\n            <ul class="video_list">\n               <li class="video_item">\n                   <a href="#" class="inner_item">\n                       <img  class="cover" src="<%@GetResFullName($images_path$pages/default_avator.png)%>"/>\n                       <div class="desc">\n                        这里是video的标题啊标题京东覅是\n                       </div>\n                   </a>\n               </li>\n            </ul>\n        </div>\n        -->\n    </div>\n\n    <!-- 无障碍按钮 -->\n    <em data-status="0" role="button" class="js_btn_play_aria btn_pause_accessibility"></em>\n\n    <!--封面-->\n    <!-- 跟播放器相同比例是style加上：\n        -webkit-background-size:cover;background-size:cover;  -->\n    <#if(cover){#>\n    <div class="js_poster_cover poster_cover" style="background-image:url(<#=cover#>)">\n        <!-- <img aria-labelledby="封面" alt="封面" src="<#=cover#>">\n        <div class="poster_cover_mask"></div> -->\n    </div>\n    <#}#>\n    <!--大播放-->\n    <div style="display:none;" class="full_screen_opr js_video_play_controll">\n        <div class="mid_play_box js_btn_play">\n            <i class="icon_mid_play"></i>\n            <p class="js_video_length video_length" style="display:none;"></p>\n        </div>\n    </div>\n\n    <!--流量提示-->\n    <div class="full_screen_opr flex_screen_hide flex_screen js_video_flow" style="display: none">\n        <div class="wx_video_flow_wrap">\n          <p class="wx_video_flow_tips js_flow_notice" style="display: none">正在使用流量播放,本视频约              <span class="js_video_flow_num"></span>\n          </p>\n          <button class="wx_video_flow_btn js_flow_play_btn" style="display:none">仍然播放</button>\n          <button class="wx_video_flow_btn js_flow_pause_btn" style="display: none">继续播放</button>\n        </div>\n    </div>\n\n    <!--mask,暂停状态下，提醒状态等的半透明蒙层-->\n    <div class="video_mask none"></div>\n\n    <!--快进。后退 操作 快进：next,快退，pre-->\n    <div  class="mid_opr fast_pre_next none js_forward">\n        <p class="video_length">\n            <span class="played_time js_forward_play_time">03:30</span>\n            <em>/</em>\n            <span class="total_time">03:30</span>\n        </p>\n        <div class="video_processor_bar">\n            <div class="processor_bar_inner js_forward_bar" style="width:30%;"></div>\n        </div>\n    </div>\n\n   <!--播放条-->\n    <!--消失opr_fade_out  出现opr_fade_in-->\n    <!--消失opr_fade_out  出现opr_fade_in-->\n    <div class="js_controll video_opr" style="display:none">\n         <div class="opr_inner">\n            <div class="opr_inner_fl">\n                <div class="js_switch switch switch_on"><!--switch_off 关闭，switch on开启-->\n                     <a href="javascript:;" class="btn_opr">on/off</a>\n                 </div>\n                <div class="played_time js_now_play_time">\n                      00:00\n                </div>\n            </div>\n\n             <div class="wrp_play_bar">\n                <div class="js_progress_bar wrp_progress" style="display:none;">\n                    <div class="progress_bar">\n                        <div class="js_played_bar played_bar" style="width:0%"></div>\n                        <div class="js_buffer_bar buffer_bar" style="width:0%"></div><!--缓冲条-->\n                        <div class="js_played_speed_cnt wrp_speed_dot"><i class="speed_dot" style="left:0%"></i></div>\n                    </div>\n                </div>\n             </div>\n\n            <!-- <div class="wrp_pop_play"><a href="#" class="pop_play">小窗</a></div> -->\n            <!--清晰度选择-->\n           <!--  <div class="play_mode">\n                 <a href="#" class="btn_mode current">超清</a>\n                 <div class="pop_mode_select">\n                     <ul class="clarity">\n                         <li class="clarity_item current">超清</li>\n                         <li class="clarity_item">标清</li>\n                         <li class="clarity_item">流畅</li>\n                     </ul>\n                 </div>\n            </div> -->\n            <div class="opr_inner_fr">\n                <div class="total_time js_total_time" style="display:none;"></div>\n                <# if (!_mustHideFullScreen) { #><div class="js_full_screen_control screenSize_control full"><i class="icon_control"></i></div>  <!--全屏className：full,小窗className：small-->\n<# } #>\n            </div>\n         </div>\n    </div>\n    <!--视频-->\n    <div class="js_inner inner not_fullscreen">\n        <div class="js_video_poster video_poster" style="display:none;">\n            <div class="video_mask"></div>\n             <video class="<#if(videoFit){#>video_fill<#}#>"  webkit-playsinline playsinline>\n                  您的浏览器不支持 video 标签             </video>\n        </div>\n    </div>\n\n</div>\n\n    <!--全屏遮罩-->\n<div class="js_full_mask full_mask" style=""></div>\n\n<!--\n11 菊花\n10 最后的视频推荐\n9封面上边的控制按钮\n8  以后的广告浮层\n7 封面\n6 视频+控制条 （在里边控制条z-index>视频） -->\n\n</div>\n';
+});define("biz_wap/jsapi/log.js",["biz_wap/jsapi/core.js","biz_wap/utils/mmversion.js"],function(i){
+"use strict";
+function o(i,o){
+o=e+" "+o+" location:["+location.href+"]",n.isWechat&&n.isAndroid?r.invoke("log",{
+level:i,
+msg:o
+}):n.isWechat&&(n.isIOS||n.isMac)&&r.invoke("writeLog",{
+level:i,
+msg:o
+});
+}
+var r=i("biz_wap/jsapi/core.js"),n=i("biz_wap/utils/mmversion.js"),e="__wap__",a={
+info:function(){
+o("info",Array.prototype.join.apply(arguments));
+},
+warn:function(){
+o("warn",Array.prototype.join.apply(arguments));
+},
+error:function(){
+o("error",Array.prototype.join.apply(arguments));
+},
+debug:function(){
+o("debug",Array.prototype.join.apply(arguments));
+}
+};
+return a.log=a.info,a;
+});define("a/a_config.js",[],function(){
+"use strict";
+var _={
+ANDROID_APP_PRODUCT_TYPE:12,
+IOS_APP_PRODUCT_TYPE:19,
+ADD_CONTACT_PRODUCT_TYPE:23,
+MINI_GAME_PRODUCT_TYPE:46,
+CARD_PRODUCT_TYPE:36,
+SHOP_PRODUCT_TYPE:30,
+WECHATCARD_PRODUCT_TYPE:47,
+BRAND_WECHAT_PRODUCT_TYPE:29,
+BRAND_GDT_PRODUCT_TYPE:31
+},a={
+POS_BOTTOM:0,
+POS_MID:4,
+POS_SPONSOR:3,
+POS_AD_BEFORE_VIDEO:7,
+POS_AD_AFTER_VIDEO:9
+},e={
+AD_DEST_TYPE:0,
+OUTER_DEST_TYPE:1,
+APPDETAIL_DEST_TYPE:2,
+BIZ_DEST_TYPE:3,
+APPINFO_PAGE_DEST_TYPE:4,
+WECHAT_SHOP_DEST_TYPE:5,
+WECHAT_APPLET_DEST_TYPE:6,
+LEAF_DEST_TYPE:7,
+CANVAS_AD_DEST_TYPE:9
+},A=function(){
+var _=18e4;
+return window.user_uin&&!isNaN(parseInt(window.user_uin,10))&&(parseInt(window.user_uin,10)%10===2||parseInt(window.user_uin,10)%10===3)&&(_=6e4),
+console.info("[广告时间缓存实验]",_),_;
+}(),T=["openUrlWithExtraWebview","openADCanvas","addContact","profile","getInstallState","installDownloadTask","addDownloadTask","pauseDownloadTask","resumeDownloadTask","queryDownloadTask","launchApplication","writeCommData","adDataReport","downloadAppInternal","wxdownload:progress_change","menu:share:appmessage","menu:share:timeline","menu:share:weibo","menu:share:facebook","menu:general:share","launch3rdApp","addDownloadTaskStraight","sendAppMessage","shareTimeline","getNetworkType","jumpToBizProfile","shareWeibo","shareFB","imagePreview","getBackgroundAudioState","openWeApp","preloadMiniProgramContacts","preloadMiniProgramEnv","calRqt","openCardDetail","batchAddCard","handleMPPageAction","makePhoneCall"],D=["/mp/advertisement_report","/mp/ad_report","/mp/ad_video_report","/mp/jsmonitor","/mp/ad_complaint","/mp/jsreport","/tp/datacenter/report","/mp/getappmsgad"];
+return{
+AD_TYPE:_,
+AD_POS:a,
+AD_CACHE_TIME:A,
+AD_DEST_TYPE:e,
+AD_FRAME_DOMAIN:"https://wxa.wxs.qq.com",
+INVALID_METHOD_NAME_MSG_PREFIX:"Invalid methodName",
+INVALID_METHOD_TYPE_MSG_PREFIX:"Invalid methodType",
+INVALID_ARGS_MSG_PREFIX:"Invalid args",
+INVALID_REQ_PATH_MSG_PREFIX:"Invalid request path",
+AD_IFRAME_HIDE_CLASS:"iframe_ad_dn",
+AD_JSAPI_WHITE_LIST:T,
+AD_REQ_PATH_WHITE_LIST:D,
+ORIGIN_VIDEO_VID_PREFIX:"wxv",
+AD_VIDEO_END_ACTION:"adVideoEnd",
+AD_VIDEO_PLAY_ACTION:"onVideoPlayV2",
+AD_PLAY_VIDEO_ACTION:"playVideoV2",
+GET_APPMSGAD_READY_STATUS_ACTION:"getAppmsgadReadyStatus",
+APPMSGAD_READY_ACTION:"appmsgadReady",
+HAS_AD_DATA_QUERY_KEY:"has_ad_data",
+GET_AD_DATA_AFTER_VIDEO_ACTION_NAME:"getAdDataAfterVideo",
+SET_PAGE_DATA_ACTION_NAME:"setPageDataV2",
+SEND_AD_VID_ACTION:"sendAdVid",
+GET_AD_VID_ACTION:"getAdVid",
+ORIGINAL_VIDEO_AD_GRAY_RATE:100,
+TX_VIDEO_AD_GRAY_RATE:100
+};
+});define("a/wxopen_card.js",["biz_wap/jsapi/core.js","biz_common/utils/report.js","biz_wap/utils/mmversion.js","biz_common/utils/monitor.js","biz_wap/utils/openUrl.js"],function(e){
+"use strict";
+function i(e,i){
+c("http://mp.weixin.qq.com/mp/ad_report?action=follow&type="+e+i);
+}
+function t(e){
+var t=e.url||"";
+t=t.replace(/&amp;/g,"&");
+var n=t.indexOf("?"),c=0;
+(119==e.pt||120==e.pt)&&(c=2),e.report_param="&tid="+e.traceid+"&ticket="+e.ticket+"&aid="+e.aid,
+t.indexOf("?")>=0?t=t.slice(0,n)+".html"+t.slice(n):t+=".html";
+var _="",l="";
+if(document.getElementsByTagName("mpcpc")[0]&&document.getElementsByTagName("mpcpc")[0].dataset&&(_=document.getElementsByTagName("mpcpc")[0].dataset.category_id_list),
+"undefined"==typeof w){
+var w;
+w=window.cgiData&&window.cgiData.__biz?window.cgiData.__biz:window.parent.biz;
+}
+l=e.traceid+":"+_+":"+w+":"+e.aid+":"+e.pos_type,console.log("sceneNote",l);
+var g={
+scene:1067,
+sceneNote:l,
+userName:e.weapp_info.original_id+"@app",
+relativeURL:t,
+appVersion:1
+},f=!1,v=navigator.userAgent.match(/MicroMessenger\/(\d+)\.(\d+)\.(\d+)/);
+if(v){
+var b=Number(v[1]),j=Number(v[2]),z=Number(v[3]);
+b>6?f=!0:6===b&&j>5?f=!0:6===b&&5===j&&z>=3&&(f=!0);
+}
+return console.log("canJumpOnTap : ",f,e.weapp_info.original_id,navigator.userAgent),
+f?(u.setSum(110696,0,1),o?u.setSum(110696,3,1):(o=!0,a=+new Date),r?+new Date-r<2e3&&(u.setSum(110696,4,1),
+setTimeout(function(){
+r=0;
+},2e3)):r=+new Date,p?+new Date-p<3e3&&(u.setSum(110696,5,1),setTimeout(function(){
+p=0;
+},3e3)):p=+new Date,s?+new Date-s<4e3&&(u.setSum(110696,6,1),setTimeout(function(){
+s=0;
+},4e3)):s=+new Date,void m.invoke("openWeApp",g,function(t){
+var n=+new Date-a;
+"openWeApp:ok"===t.err_msg&&i(125+c,e.report_param),"system:function_not_exist"===t.err_msg&&(d("https://mp.weixin.qq.com/mp/waerrpage?type=upgrade&original_id="+encodeURIComponent(e.weapp_info.original_id)+"#wechat_redirect"),
+i(126+c,e.report_param)),u.setAvg(110696,2,n).send(),o=!1;
+})):(d("https://mp.weixin.qq.com/mp/waerrpage?type=upgrade&original_id="+encodeURIComponent(e.weapp_info.original_id)+"#wechat_redirect"),
+void i(126+c,e.report_param));
+}
+function n(e){
+m.invoke("preloadMiniProgramContacts",{
+userNames:[e.weapp_info.original_id+"@app"]
+},function(){}),m.invoke("preloadMiniProgramEnv",{
+userNames:[e.weapp_info.original_id+"@app"]
+},function(){});
+}
+var o,a,r,p,s,m=e("biz_wap/jsapi/core.js"),c=e("biz_common/utils/report.js"),u=(e("biz_wap/utils/mmversion.js"),
+e("biz_common/utils/monitor.js")),d=e("biz_wap/utils/openUrl.js").openUrlWithExtraWebview;
+return{
+openWxopen:t,
+startConnect:n
+};
+});define("new_video/plugin/frameAd.js",["new_video/plugin/frameAd.html.js","cdg_module/dist/sdk.js","biz_common/tmpl.js","biz_wap/utils/ajax.js","biz_wap/jsapi/core.js","pages/iframe_communicate.js"],function(a){
+"use strict";
+var t=a("new_video/plugin/frameAd.html.js"),o=a("cdg_module/dist/sdk.js"),e=a("biz_common/tmpl.js"),n=a("biz_wap/utils/ajax.js"),i=a("biz_wap/jsapi/core.js"),d=a("pages/iframe_communicate.js"),r=0,s=function(a){
+var s=a.duration||0,p=this,p=this,c=p.container=$(a.container);
+p.opt=a,p.duration=s,p.currentTime=0,p.clock=null,p.onHandler=a.onHandler,p.hasPlay=!1,
+a.id=p.id=r++,c.append(e.tmpl(t,a)),p.dom=$("#js_mpvedio_frame_"+p.id);
+var l=this.adIframe=$("#js_mpvedio_main_frame_"+p.id).get(0);
+window.parent.originalVideoAdFrames.push(l),l.setAttribute("src",location.protocol+"//mp.weixin.qq.com/mp/readtemplate?t=pages/video_cdg_ad_iframe"),
+window.addEventListener("message",function(t){
+var e=t.data;
+console.log("framead receive data",t),console.info("cdg ad video frame connection: ",e.action),
+t.source!==window&&t.source==l.contentWindow&&"onFrameReady"==e.action&&(l.contentWindow.addEventListener("message",function(t){
+if(t.source==l.contentWindow){
+var o=t.data;
+if("onSDKReady"==o.action)12==p.opt.adData.product_type&&p.opt.adData.app_info?i.invoke("getInstallState",{
+packageName:p.opt.adData.app_info.apk_name
+},function(a){
+var t=a.err_msg,o=t.lastIndexOf("_")+1,e=t.substring(o);
+1*e>=p.opt.adData.app_info.version_code&&t.indexOf("get_install_state:yes")>-1&&(p.opt.adData.is_app_installed=!0),
+p.opt.adData.is_app_installed&&("string"==typeof p.opt.adData.button_action&&(p.opt.adData.button_action=JSON.parse(p.opt.adData.button_action.html())),
+p.opt.adData.button_action.button_text="已安装"),l.contentWindow.postMessage({
+action:"setAdData",
+value:p.opt.adData
+},"*");
+}):l.contentWindow.postMessage({
+action:"setAdData",
+value:p.opt.adData
+},"*"),l.contentWindow.postMessage({
+action:"setPageData",
+value:{
+user_uin:"777",
+publisher_appid:p.opt.appmsgData.biz,
+appmsg_id:p.opt.appmsgData.appmsgid,
+item_idx:p.opt.appmsgData.idx,
+duration_ms:p.opt.videoDuration,
+vid:p.opt.appmsgData.vid,
+page_enter_time:10,
+url:window.parent.location.href,
+appid:p.opt.adData.cdg_appid
+}
+},"*");else if("onAdReady"==o.action);else if("onError"==o.action)p.hasPlay?(p.dom.hide(),
+p.opt.onEnd&&a.onEnd("end"),window.parent.originalVideoAdCurrentFrame=null):p.opt.onError();else if("onLand"==o.action);else if("onClose"==o.action)p.dom.hide(),
+p.opt.onEnd&&a.onEnd("end"),window.parent.originalVideoAdCurrentFrame=null;else if("onProxy"==o.action){
+var e=o.value.proxyData.methodName,r=o.value.proxyId,s=o.value.proxyData.args;
+if(console.info("cdg ad video frame connection[proxy]: ",e,r),"calRqt"==e||"adDataReport"==e)return void p.opt.JSAPI.invoke(e,s,function(a){
+l.contentWindow.postMessage({
+proxyId:r,
+proxyData:a
+},"*");
+});
+if("ajaxPost"==e){
+var c=o.value.proxyData.args.url||o.value.proxyData.url,r=o.value.proxyId,u=o.value.proxyData.args.data;
+return void n({
+url:c,
+type:"post",
+data:u,
+success:function(a){
+try{
+l.contentWindow.postMessage({
+proxyId:r,
+proxyData:a
+},"*");
+}catch(t){
+console.log("ajaxPost catch");
+}
+},
+error:function(a){
+try{
+l.contentWindow.postMessage({
+proxyId:r,
+proxyData:a
+},"*");
+}catch(t){
+console.log("ajaxPost catch");
+}
+},
+complete:function(a){
+try{
+l.contentWindow.postMessage({
+proxyId:r,
+proxyData:a
+},"*");
+}catch(t){
+console.log("ajaxPost catch");
+}
+}
+});
+}
+if(p.opt.adData.is_app_installed)return;
+p.onHandler(o.value),window.parent.originalVideoAdCurrentFrame=l,l.contentWindow.postMessage({
+action:"pauseAd"
+},"*");
+}else if("onResume"==o.action){
+for(var m=0;m<window.parent.originalVideoAdFrames.length;m++)window.parent.originalVideoAdFrames[m].contentWindow.postMessage({
+action:"pauseAd",
+value:""
+},"*");
+d.broadcastMessage({
+type:"broadcastPlay",
+data:{
+id:null
+}
+}),p.adIframe.contentWindow.postMessage({
+action:"playAd",
+value:""
+},"*"),window.parent.originalVideoAdCurrentFrame=l;
+}
+}
+}),l.contentWindow.postMessage({
+action:"initSDKCode",
+value:o
+},"*"));
+});
+};
+return s.prototype._trigger=function(a){
+var t=this;
+t[a]&&t[a]();
+},s.prototype._getContainer=function(){
+return this.dom;
+},s.prototype.beginPlay=function(){
+var a=this,t=a.dom;
+t.show(),a.adIframe.contentWindow.postMessage({
+action:"showAd",
+value:""
+},"*");
+for(var o=0;o<window.parent.originalVideoAdFrames.length;o++)window.parent.originalVideoAdFrames[o].contentWindow.postMessage({
+action:"pauseAd",
+value:""
+},"*");
+d.broadcastMessage({
+type:"broadcastPlay",
+data:{
+id:null
+}
+}),a.adIframe.contentWindow.postMessage({
+action:"playAd",
+value:""
+},"*"),a.hasPlay=!0,window.parent.originalVideoAdCurrentFrame=a.adIframe;
+},s.prototype._hidePlayer=function(){
+this.dom.hide();
+},s.prototype.play=function(){
+this.dom.show(),this.beginPlay();
+},s.prototype.pause=function(){
+var a=this;
+a.clock&&clearTimeout(a.clock);
+},s.prototype.setVideoCSS=function(a){
+this._getContainer().css(a);
+},s.prototype.timeupdate=function(){
+{
+var a=this;
+a.opt;
+}
+},s;
+});define("new_video/plugin/imgAd.js",["new_video/plugin/imgAd.html.js","biz_common/tmpl.js"],function(t){
+"use strict";
+var i=t("new_video/plugin/imgAd.html.js"),o=t("biz_common/tmpl.js"),e=0,n=function(t){
+var n=t.duration||0,r=this,r=this,u=r.container=$(t.container);
+r.opt=t,r.duration=n,r.currentTime=0,r.clock=null,t.id=r.id=e++,u.append(o.tmpl(i,t)),
+r.dom=$("#js_mpvedio_imgad_"+r.id),this._getImageRatio();
+};
+return n.prototype._getImageRatio=function(){
+var t=this,i=this.opt,o=new window.Image;
+o.onload=function(){
+var e=o.naturalWidth||o.width||0,n=o.naturalHeight||o.height||0;
+e&&n&&Math.abs(e/n-i.ratio)<=.1&&t.dom.find(".js_img").css({
+"-webkit-background-size":"cover",
+"background-size":"cover"
+}),o.onload=null,o=null;
+},o.src=i.imgUrl;
+},n.prototype._trigger=function(t){
+var i=this;
+i[t]&&i[t]();
+},n.prototype._getContainer=function(){
+return this.dom;
+},n.prototype.beginPlay=function(){
+var t=this,i=t.dom;
+i.show(),t.clock=setTimeout(function(){
+t.timeupdate();
+},100);
+},n.prototype._hidePlayer=function(){
+this.dom.hide();
+},n.prototype.play=function(){
+this.dom.show(),this.beginPlay();
+},n.prototype.pause=function(){
+var t=this;
+t.clock&&clearTimeout(t.clock);
+},n.prototype.setVideoCSS=function(t){
+this._getContainer().css(t);
+},n.prototype.timeupdate=function(){
+var t=this,i=t.opt;
+return t.currentTime>t.duration?void(i.onEnd&&i.onEnd("end")):(t.currentTime+=100,
+setTimeout(function(){
+t.timeupdate();
+},100),void(i.onTimeupdate&&i.onTimeupdate("end",{
+currentTime:t.currentTime/1e3
+})));
+},n;
+});

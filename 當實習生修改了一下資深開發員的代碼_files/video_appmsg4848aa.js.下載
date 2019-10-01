@@ -1,0 +1,104 @@
+define("pages/video_appmsg.js",["biz_common/utils/string/html.js","pages/iframe_communicate.js","biz_common/dom/event.js","pages/qq_video_info.js","pages/video_plugin/pause_tips.js","pages/video_plugin/video_app.js","pages/video_plugin/video_like.js","pages/video_ctrl.js","biz_wap/jsapi/core.js"],function(i){
+"use strict";
+i("biz_common/utils/string/html.js");
+var e=i("pages/iframe_communicate.js"),o=i("biz_common/dom/event.js"),t=i("pages/qq_video_info.js"),a=i("pages/video_plugin/pause_tips.js"),n=i("pages/video_plugin/video_app.js"),d=i("pages/video_plugin/video_like.js"),s=i("pages/video_ctrl.js"),_=i("biz_wap/jsapi/core.js"),c={
+hasShowBotbar:!1,
+mpVideoBotH:37,
+showComment:!0,
+loverCount:{}
+};
+!function(){
+function i(){
+top!=window&&-1!=location.href.indexOf("__td=qq.com")&&(document.domain="qq.com");
+var i=window.cgiData;
+c.ori_status=1*i.ori_status===1?1:1*i.ori_status===2?2:3,c.showComment=1*i.show_comment===1?!0:!1,
+c.comment_id=i.comment_id,c.id=i.id,c.ckey=i.ckey,c.ckey_ad=i.ckey_ad,c.__biz=i.__biz,
+c.uin=i.uin,c.mid=i.mid,c.idx=i.idx,c.scene=window.cgiData.scene||r("scene",window.parent.window.location.href)||0,
+c.autoplay=!!window.__auto_play__,c.dom={
+js_mpvedio:v("js_mpvedio"),
+page_content:v("page-content")
+};
+}
+function w(){
+m();
+}
+function p(){
+var i=v("h5_profile_btn");
+i&&2==window.cgiData.ori_status&&o.tap(i,function(){
+var i="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz="+window.cgiData.source_encode_biz+"&scene=111#wechat_redirect";
+-1!=navigator.userAgent.indexOf("WindowsWechat")||-1!=navigator.userAgent.indexOf("Mac OS")?window.parent.location.href=i:_.invoke("openUrlWithExtraWebview",{
+url:i,
+openType:1
+},function(e){
+-1==e.err_msg.indexOf("ok")&&(window.parent.location.href=i);
+});
+});
+var e=v("video_detail_btn");
+e&&1==window.cgiData.media_source&&o.tap(e,function(){
+var i=["https://mp.weixin.qq.com/mp/video?t=pages/video_detail_new","&vid=",c.id,"&mid=",c.mid,"&__biz=",c.__biz,"&idx=",c.idx,"&sn=",window.parent.window.sn||r("sign",window.parent.window.location.href)||"","&vidsn=",window.cgiData&&window.cgiData.vidsn?window.cgiData.vidsn:"","&scene=100#wechat_redirect"];
+c.myPlayer&&c.myPlayer.extendMpReportData({
+detail_click:1
+}),window.parent.window.location.href=i.join("");
+});
+}
+function r(i){
+var e=arguments[1]||window.location.search,o=new RegExp("(^|&)"+i+"=([^&]*)(&|$)"),t=e.substr(e.indexOf("?")+1).match(o);
+return null!=t?t[2]:"";
+}
+function m(){
+var i=s.getRatio();
+cgiData.vw&&cgiData.vh&&(i=cgiData.vw/cgiData.vh);
+var o=cgiData.vw||c.dom.js_mpvedio.offsetWidth,_=Math.ceil(o/i),w=[],p=!1;
+s.showVideoLike()&&!window.cgiData.is_mp_video&&(w.push(new d),p=!0),s.showPauseTips()&&!window.cgiData.is_mp_video&&(w.push(new a),
+p=!0),p&&!window.cgiData.is_mp_video&&w.push(new n),c.myPlayer=new t.mpVideoPlayer({
+preview:!(1*window.cgiData.preview!==1),
+isInIframe:!0,
+hit_bizuin:cgiData.hit_bizuin,
+hit_vid:cgiData.hit_vid,
+fromid:c.scene,
+ori_status:c.ori_status,
+is_mp_video:window.cgiData.txvideo_vid?0:window.cgiData.is_mp_video,
+plugins:w,
+oriVid:c.id,
+vid:window.cgiData.txvideo_vid?window.cgiData.txvideo_vid:c.id,
+ckey:window.cgiData.txvideo_vid?"":c.ckey,
+ckey_ad:c.ckey_ad,
+width:o,
+height:_,
+container:"#js_mpvedio",
+__biz:c.__biz,
+uin:c.uin,
+mid:c.mid,
+idx:c.idx,
+comment_id:c.comment_id,
+scene_type:0,
+autoplay:c.autoplay,
+onReady:function(){
+if(c.dom.js_mpvedio.style.height="100%",(s.showVideoDetail()||s.showReprint())&&!c.hasShowBotbar){
+var i=v("bottom_bar");
+i&&(i.style.display="",c.hasShowBotbar=!0,e.postMessage({
+type:"addVideoIframeHeight",
+data:{
+vid:window.cgiData.txvideo_vid||c.id,
+height:c.mpVideoBotH
+}
+}));
+}
+e.postMessage({
+type:"videoInited",
+data:{
+vid:c.id,
+ori_status:c.ori_status,
+hit_bizuin:cgiData.hit_bizuin,
+hit_vid:cgiData.hit_vid
+}
+});
+}
+});
+}
+function v(i){
+return document.getElementById(i);
+}
+i(),w(),p();
+}();
+});
